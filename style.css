@@ -1,0 +1,281 @@
+:root {
+	--size-icon: 200px;
+}
+body.light {
+	--body-color: #716957;
+	--body-bg: #f7f3e7;
+	--nookapp-bg: #EEEBE3;
+	--nookapp-box-shadow-1: rgba(208, 204, 191, 0.66);
+	--nookapp-box-shadow-2: #E4E1D8;
+	--nookapp-box-shadow-3: rgba(255, 255, 255, 0.57);
+	--tracker-color: #9365e2;
+	--tracker-color-rgba: rgb(147, 101, 226, 0.38);
+	--thumb-color: #ff66b2;
+}
+
+body.dark {
+	--body-color: #faf4df;
+	--body-bg: #1c1c1c;
+	--nookapp-bg: #0D0C0B;
+	--nookapp-box-shadow-1: rgba(6, 5, 5, 0.66);
+	--nookapp-box-shadow-2: #0D0C0C;
+	--nookapp-box-shadow-3: rgba(50, 49, 49, 0.57);
+	--tracker-color: #9365e2;
+	--tracker-color-rgba: rgb(147, 101, 226, 0.38);
+	--thumb-color: #ff66b2;
+}
+
+@mixin size($w, $h: $w) {
+	width: $w;
+	height: $h;
+}
+
+@mixin center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin stretch {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.camera {
+	--width-camera: calc(var(--size-icon) - var(--size-icon) / 3.125);
+	--height-camera: calc((var(--size-icon) - var(--size-icon) / 3.125) / 1.5);
+	--height-top-camera: calc(var(--height-camera) / 5);
+	margin-top: var(--height-top-camera);
+	display: flex;
+	justify-content: center;
+	position: relative;
+	@include size(var(--width-camera), var(--height-camera));
+	transition: transform .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+	transform-origin: top left;
+	
+	
+	&__top {
+		--width-flash: calc(var(--width-camera) / 2.4);
+		--height-flash: calc(var(--height-camera) / 5);
+		display: block;
+		position: relative;
+		width: var(--width-flash);
+		height: var(--height-flash);
+		margin-top: calc(var(--height-top-camera) * -1);
+		background: #9365e2;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		box-shadow: inset 5px 2px 20px 0px rgba(255, 255, 255, .4),
+			13px 4px 12px rgba(115, 34, 255, 0.28);
+		
+		&::before {
+			display: block;
+			position: absolute;
+			content: '';
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			width: calc(var(--width-flash) / 2.5);
+			height: calc(var(--height-flash) / 2.3);
+			border-radius: calc(var(--width-flash) / 2.5);
+			box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.2),
+				11px 4px 13px rgb(24, 8, 53, 0.49);
+		}
+	}
+	
+	
+	&__body {
+		position: absolute;
+		display: block;
+		left: 0;
+		@include size(100%);
+		background: linear-gradient(24.34deg, #ff66b2 12.66%, #9365e2 62.32%);
+		border-radius: calc(var(--width-camera) / 6);
+		box-shadow: inset 3px -2px 14px 0px rgba(255, 255, 255, .4),
+			20px 20px 20px rgba(92, 1, 247, 0.21),
+			19px 5px 20px rgba(0, 0, 0, .22),
+			3px 4px 12px rgba(115, 34, 255, 0.28);
+		transition: box-shadow .3s ease;
+	}
+	
+	
+	&__button {
+		position: absolute;
+		left: 6px;
+		margin-top: calc(var(--height-top-camera) / 2 * -1);
+		width: calc(var(--width-camera) / 5);
+		height: calc(var(--height-camera) / 5);
+		background-color: #ff66b2;
+		border-radius: 4px 4px 0 0;
+		z-index: 0;
+		box-shadow: inset 2px 4px 6px 0px rgba(255, 255, 255, .24),
+			3px 4px 12px rgba(255, 102, 178, 0.68);
+	}
+	
+	
+	&__lens {
+		@include center;
+		@include size(calc(var(--width-camera) / 2));
+		background-color: #fff;
+		border-radius: 50%;
+		box-shadow: inset 0 0 12px 0px rgba(0, 0, 0, .26),
+			inset 3px 4px 5px 0px rgba(147, 101, 226, .38),
+			inset 4px -2px 5px 0px rgba(255, 102, 178, 0.37),
+			3px 4px 12px rgba(0, 0, 0, 0.28);
+		z-index: 3;
+		&--inner {
+			@include center;
+			@include size(calc(var(--width-camera) / 2.7));
+			margin-left: 0.7px;
+			background-color: #6d3fbd;
+			border-radius: inherit;
+			box-shadow: inset 4px 6px 12px 0px rgba(255, 255, 255, .21),
+				inset 1px 1px 6px 0px rgba(255, 255, 255, .31);
+		}
+	}
+}
+
+.nookApp {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	@include size(var(--size-icon));
+	border-radius: calc(var(--size-icon) / 3);
+	transition: transform .3s ease;
+	&::before {
+		display: block;
+		content: '';
+		@include stretch;
+		z-index: 0;
+		overflow: hidden;
+		border-radius: inherit;
+		background: linear-gradient(137.64deg, var(--body-bg) 0%, var(--nookapp-bg) 97.97%);
+		backdrop-filter: blur(10px);
+		opacity: 0.8;
+		box-shadow: 
+			calc(var(--size-icon) / 2.8) calc(var(--size-icon) / 3.125) calc(var(--size-icon) / 3.6) var(--nookapp-box-shadow-1),
+			calc(var(--size-icon) / 6.696) calc(var(--size-icon) / 7.813) calc(var(--size-icon) / 7.813) var(--nookapp-box-shadow-2),
+			calc(var(--size-icon) / -9.868) calc(var(--size-icon) / -12.097) calc(var(--size-icon) / 7.813) var(--nookapp-box-shadow-3);
+	}
+	
+	&:hover {
+		transform: scale(1.1);
+		.camera {
+			transform: rotate(-15deg) scale(1.3) translate(-10px, 0px);
+			animation: jump-2 1s ease-in-out infinite;
+			&__body {
+				box-shadow: inset 3px -2px 14px 0px rgba(255, 255, 255, .4),
+					-9px 13px 20px rgba(92, 1, 247, 0.16),
+					11px 16px 20px rgba(0, 0, 0, .22),
+					3px 4px 12px rgba(115, 34, 255, 0.28);
+			}
+			&__button {
+				animation: jump 1.4s cubic-bezier(0.22, 1, 0.36, 1) infinite .5s;
+			}
+		}
+	}
+}
+
+
+.center {
+	@include center;
+}
+
+body {
+	background-color: var(--body-bg);
+	color: var(--body-color);
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 32px;
+	#size-icon {
+		-webkit-appearance: none;
+		@include size(150px, 10px);
+		border-radius: 5px;
+		background-color: var(--tracker-color-rgba);
+		outline: none;
+		padding: 0;
+		margin: 0 0 0 12px;
+		box-shadow: inset 2px 2px 7px 0px rgba(0, 0, 0, 0.2),
+			inset -1px 1px 7px 0px rgba(0, 0, 0, 0.11);
+
+		
+		&::-webkit-slider-thumb {
+			appearance: none;
+			@include size(20px);
+			border-radius: 50%;
+			background: var(--tracker-color);
+			cursor: pointer;
+
+			&:hover {
+				background: var(--tracker-color);
+			}
+		}
+
+		&:active::-webkit-slider-thumb {
+			background: var(--tracker-color);
+		}
+	}
+}
+
+#theme {
+	position: fixed;
+	right: 16px;
+	bottom: 16px;
+	z-index: 10;
+	label,
+	label:hover {
+		cursor: pointer;
+	}
+
+	#change-theme {
+		display: none;
+		& ~ .sun {
+			display: none;
+		}
+		& ~ .moon {
+			display: block;
+		}
+		&:checked {
+			& ~ .sun {
+				display: block;
+			}
+			& ~ .moon {
+				display: none;
+			}
+		}
+	}
+}
+
+
+@keyframes jump {
+	0% {
+		transform: translateY(0);
+	}
+	10% {
+		transform: translateY(7px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+@keyframes jump-2 {
+	0% {
+		top: 0;
+	}
+	50% {
+		top: 10px;
+	}
+	100% {
+		top: 0;
+	}
+}
